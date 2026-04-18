@@ -117,23 +117,92 @@
   .feature-title { font-size:13px; font-weight:700; color:#1a1a2e; margin-bottom:3px; }
   .feature-desc { font-size:12px; color:#9ca3af; line-height:1.45; }
 
-  /* ============ APP PREVIEW ============ */
+  /* ============ APP PREVIEW (carousel) ============ */
   .preview-section {
     background: linear-gradient(180deg, #ede8ff 0%, #f5f5f5 80%);
-    padding: 64px 24px 72px;
+    padding: 64px 0 72px;
     text-align: center;
+    overflow: hidden;
   }
-  .preview-inner { max-width: 500px; margin: 0 auto; }
+  .preview-inner { max-width: 680px; margin: 0 auto; padding: 0 24px; }
   .preview-title { font-family:'DM Serif Display',serif; font-size:32px; font-weight:400; color:#1a1a2e; margin-bottom:10px; line-height:1.2; letter-spacing:-0.01em; }
-  .preview-sub { font-size:14px; color:#6b7280; margin-bottom:48px; line-height:1.6; }
+  .preview-sub { font-size:14px; color:#6b7280; margin-bottom:40px; line-height:1.6; }
 
-  .phone-wrap { display: inline-block; position: relative; width: 260px; }
-  .phone-glow { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 340px; height: 560px; border-radius: 50%; background: radial-gradient(ellipse, rgba(168,85,247,0.18) 0%, transparent 70%); filter: blur(40px); z-index: -1; pointer-events: none; }
-  .phone-frame { width: 260px; background: #1a1a1e; border-radius: 44px; padding: 8px; border: 1.5px solid rgba(255,255,255,0.12); position: relative; box-shadow: 0 8px 20px rgba(0,0,0,0.15), 0 32px 64px rgba(99,102,241,0.25); }
-  .phone-screen { border-radius: 37px; overflow: hidden; width: 100%; display: block; background: #1a1a2e; position: relative; min-height: 530px; }
-  .phone-screen img { width: 100%; height: auto; display: block; position: relative; z-index: 1; }
-  .phone-island { position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 72px; height: 20px; background: #000; border-radius: 99px; z-index: 10; }
-  .phone-island::after { content: ''; position: absolute; right: 14px; top: 50%; transform: translateY(-50%); width: 6px; height: 6px; background: radial-gradient(circle at 35% 35%, #2a2a3a 0%, #111 70%); border-radius: 50%; border: 1px solid #1a1a1e; }
+  /* Horizontal scrolling carousel */
+  .phone-carousel {
+    display: flex;
+    gap: 24px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+    padding: 40px 24px 32px;
+    /* Centre first and last slides using symmetric padding */
+    scroll-padding: 24px;
+  }
+  .phone-carousel::-webkit-scrollbar { display: none; } /* Safari/Chrome */
+
+  .phone-slide {
+    flex: 0 0 auto;
+    scroll-snap-align: center;
+    position: relative;
+  }
+
+  .phone-wrap { display: inline-block; position: relative; width: 240px; }
+  .phone-glow { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 320px; height: 540px; border-radius: 50%; background: radial-gradient(ellipse, rgba(168,85,247,0.18) 0%, transparent 70%); filter: blur(40px); z-index: -1; pointer-events: none; }
+  .phone-frame { width: 240px; background: #1a1a1e; border-radius: 42px; padding: 7px; border: 1.5px solid rgba(255,255,255,0.12); position: relative; box-shadow: 0 8px 20px rgba(0,0,0,0.15), 0 24px 56px rgba(99,102,241,0.22); }
+  .phone-screen { border-radius: 35px; overflow: hidden; width: 100%; display: block; background: #1a1a2e; position: relative; aspect-ratio: 9 / 19.5; }
+  .phone-screen img { width: 100%; height: 100%; object-fit: cover; display: block; position: relative; z-index: 1; }
+  .phone-island { position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 68px; height: 19px; background: #000; border-radius: 99px; z-index: 10; }
+  .phone-island::after { content: ''; position: absolute; right: 13px; top: 50%; transform: translateY(-50%); width: 6px; height: 6px; background: radial-gradient(circle at 35% 35%, #2a2a3a 0%, #111 70%); border-radius: 50%; border: 1px solid #1a1a1e; }
+
+  /* Swipe hint for first load */
+  .swipe-hint {
+    font-size: 11px;
+    font-weight: 500;
+    color: #9ca3af;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .swipe-hint svg { width: 14px; height: 14px; animation: swipe-nudge 2.2s ease-in-out infinite; }
+  @keyframes swipe-nudge {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(5px); }
+  }
+
+  /* ── Theme previews subsection ── */
+  .themes-block {
+    margin-top: 48px;
+    padding-top: 40px;
+    border-top: 1px solid rgba(75,45,92,0.08);
+  }
+  .themes-eyebrow { font-size:10px; font-weight:700; color:#9ca3af; text-transform:uppercase; letter-spacing:0.14em; margin-bottom:10px; }
+  .themes-title { font-family:'DM Serif Display',serif; font-size:24px; font-weight:400; color:#1a1a2e; margin-bottom:8px; line-height:1.2; letter-spacing:-0.01em; }
+  .themes-sub { font-size:13px; color:#6b7280; margin-bottom:28px; line-height:1.6; }
+  .themes-row {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .theme-phone {
+    width: 180px;
+  }
+  .theme-phone .phone-frame { width: 180px; border-radius: 32px; padding: 5px; }
+  .theme-phone .phone-screen { border-radius: 27px; }
+  .theme-phone .phone-island { width: 52px; height: 15px; top: 6px; }
+  .theme-phone .phone-island::after { width: 4px; height: 4px; right: 9px; }
+  .theme-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #6b7280;
+    margin-top: 12px;
+    letter-spacing: 0.04em;
+  }
 
   /* ============ CTA SECTION (waitlist form) ============ */
   .cta-section {
@@ -226,7 +295,7 @@
   <div class="features-inner">
     <div class="section-eyebrow">What's inside Worthly</div>
     <h2 class="section-title">Everything in one place</h2>
-    <p class="section-sub">Ten powerful tools designed to help you understand your money, make smarter decisions and build the life you want.</p>
+    <p class="section-sub">Tools and features designed to help you understand your money, make smarter financial decisions, and feel genuinely good about where you're headed.</p>
     <div class="features-grid">
       <div class="feature-card"><div class="feature-icon">💳</div><div><div class="feature-title">Budget Tracking</div><div class="feature-desc">Track spending by category, set recurring transactions and review yearly stats.</div></div></div>
       <div class="feature-card"><div class="feature-icon">📈</div><div><div class="feature-title">Net Worth Tracking</div><div class="feature-desc">See your full financial picture — assets, debts and investments in one clean view.</div></div></div>
@@ -247,15 +316,124 @@
   <div class="preview-inner">
     <h2 class="preview-title">Beautiful by design</h2>
     <p class="preview-sub">Clean, intuitive and built to feel good to use every single day.</p>
-    <div class="phone-wrap">
-      <div class="phone-glow"></div>
-      <div class="phone-frame">
-        <div class="phone-screen">
-          <div class="phone-island"></div>
-          <img src="https://i.imgur.com/21TYMuM.png" alt="Worthly app screenshot"/>
+  </div>
+
+  <div class="phone-carousel">
+    <div class="phone-slide">
+      <div class="phone-wrap">
+        <div class="phone-glow"></div>
+        <div class="phone-frame">
+          <div class="phone-screen">
+            <div class="phone-island"></div>
+            <img src="https://i.imgur.com/FzRNIen.png" alt="Worthly app screen"/>
+          </div>
         </div>
       </div>
     </div>
+    <div class="phone-slide">
+      <div class="phone-wrap">
+        <div class="phone-glow"></div>
+        <div class="phone-frame">
+          <div class="phone-screen">
+            <div class="phone-island"></div>
+            <img src="https://i.imgur.com/VGkuzx6.png" alt="Worthly app screen"/>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="phone-slide">
+      <div class="phone-wrap">
+        <div class="phone-glow"></div>
+        <div class="phone-frame">
+          <div class="phone-screen">
+            <div class="phone-island"></div>
+            <img src="https://i.imgur.com/KJyFB9a.png" alt="Worthly app screen"/>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="phone-slide">
+      <div class="phone-wrap">
+        <div class="phone-glow"></div>
+        <div class="phone-frame">
+          <div class="phone-screen">
+            <div class="phone-island"></div>
+            <img src="https://i.imgur.com/lDGPXIu.png" alt="Worthly app screen"/>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="phone-slide">
+      <div class="phone-wrap">
+        <div class="phone-glow"></div>
+        <div class="phone-frame">
+          <div class="phone-screen">
+            <div class="phone-island"></div>
+            <img src="https://i.imgur.com/TliaHGu.png" alt="Worthly app screen"/>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="phone-slide">
+      <div class="phone-wrap">
+        <div class="phone-glow"></div>
+        <div class="phone-frame">
+          <div class="phone-screen">
+            <div class="phone-island"></div>
+            <img src="https://i.imgur.com/7eyWbPV.png" alt="Worthly app screen"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="preview-inner">
+    <div class="swipe-hint">
+      Swipe to see more
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+
+    <div class="themes-block">
+      <div class="themes-eyebrow">Make it yours</div>
+      <h3 class="themes-title">Pick your theme</h3>
+      <p class="themes-sub">Three palettes to match your vibe.</p>
+      <div class="themes-row">
+        <div class="theme-phone">
+          <div class="phone-wrap" style="width:180px;">
+            <div class="phone-frame">
+              <div class="phone-screen">
+                <div class="phone-island"></div>
+                <img src="https://i.imgur.com/FzRNIen.png" alt="Pink theme"/>
+              </div>
+            </div>
+          </div>
+          <div class="theme-label">Pink</div>
+        </div>
+        <div class="theme-phone">
+          <div class="phone-wrap" style="width:180px;">
+            <div class="phone-frame">
+              <div class="phone-screen">
+                <div class="phone-island"></div>
+                <img src="https://i.imgur.com/tYljw2u.png" alt="Blue theme"/>
+              </div>
+            </div>
+          </div>
+          <div class="theme-label">Blue</div>
+        </div>
+        <div class="theme-phone">
+          <div class="phone-wrap" style="width:180px;">
+            <div class="phone-frame">
+              <div class="phone-screen">
+                <div class="phone-island"></div>
+                <img src="https://i.imgur.com/rAFwCru.png" alt="Warm theme"/>
+              </div>
+            </div>
+          </div>
+          <div class="theme-label">Warm</div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -264,7 +442,7 @@
   <div class="cta-inner">
     <div class="cta-eyebrow">Join the waitlist</div>
     <h2 class="cta-title">Be the first to know when Worthly launches.</h2>
-    <p class="cta-sub">Drop your email and we'll let you know the moment Worthly lands on the App Store.</p>
+    <p class="cta-sub">Sign up for the waitlist and we'll let you know the moment Worthly lands on the App Store.</p>
 
     <!-- KIT WAITLIST FORM -->
     <div class="kit-wrapper">
