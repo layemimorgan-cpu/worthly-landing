@@ -125,37 +125,16 @@
     margin: 0 auto 24px;
   }
 
-  /* Dot ornament — subtle section break between hero and features */
-  .dot-ornament {
-    background: white;
-    padding: 16px 24px;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-  }
-  .dot-ornament span {
-    display: inline-block;
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: #FF3CAC;
-    opacity: 0.5;
-  }
-  .dot-ornament span:nth-child(2) { opacity: 0.75; }
-  .dot-ornament span:nth-child(3) { opacity: 0.5; }
-
   /* ============ FEATURES ============ */
-  .features-section { background: white; padding: 20px 24px 64px; }
+  .features-section { background: #fff5fa; padding: 64px 24px 72px; }
   .features-inner { max-width: 680px; margin: 0 auto; }
   .section-eyebrow { font-size:10px; font-weight:700; color:#9ca3af; text-transform:uppercase; letter-spacing:0.14em; margin-bottom:12px; text-align:center; }
   .section-title { font-family:'DM Serif Display',serif; font-size:32px; font-weight:400; color:#1a1a2e; text-align:center; margin-bottom:12px; line-height:1.2; letter-spacing:-0.01em; }
   .section-sub { text-align:center; color:#6b7280; font-size:15px; line-height:1.6; max-width:440px; margin:0 auto 40px; }
   .features-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
   @media(max-width:560px){ .features-grid{grid-template-columns:1fr;} }
-  .feature-card { display:flex; gap:13px; align-items:flex-start; background:#fafafa; border:1.5px solid #f3f4f6; border-radius:16px; padding:15px 16px; transition:border-color 0.2s, transform 0.2s; }
-  .feature-card:hover { border-color:#FF3CAC30; transform:translateY(-2px); }
+  .feature-card { display:flex; gap:13px; align-items:flex-start; background:#ffffff; border:1.5px solid #fde4f2; border-radius:16px; padding:15px 16px; transition:border-color 0.2s, transform 0.2s; }
+  .feature-card:hover { border-color:#FF3CAC50; transform:translateY(-2px); }
   .feature-icon { font-size:22px; flex-shrink:0; margin-top:2px; }
   .feature-title { font-size:13px; font-weight:700; color:#1a1a2e; margin-bottom:3px; }
   .feature-desc { font-size:12px; color:#9ca3af; line-height:1.45; }
@@ -365,13 +344,6 @@
 
     <div class="hero-footnote">Free to download<span class="sep">•</span>Available on iOS</div>
   </div>
-</div>
-
-<!-- ============ DOT ORNAMENT (section break) ============ -->
-<div class="dot-ornament">
-  <span></span>
-  <span></span>
-  <span></span>
 </div>
 
 <!-- ============ FEATURES ============ -->
