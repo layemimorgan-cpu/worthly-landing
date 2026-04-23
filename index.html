@@ -18,6 +18,65 @@
   }
   html { scroll-behavior: smooth; }
 
+  /* ============ IN-APP BROWSER BANNER ============ */
+  .inapp-banner {
+    display: none;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: linear-gradient(135deg, #FF3CAC 0%, #a855f7 50%, #6366f1 100%);
+    color: white;
+    padding: 14px 16px 14px 20px;
+    box-shadow: 0 4px 16px rgba(168,85,247,0.25);
+    animation: slideDown 0.4s ease-out;
+  }
+  .inapp-banner.show { display: flex; align-items: center; gap: 12px; }
+  @keyframes slideDown {
+    from { transform: translateY(-100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  .inapp-banner-icon {
+    font-size: 22px;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+  .inapp-banner-text {
+    flex: 1;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: 0.005em;
+  }
+  .inapp-banner-text strong {
+    font-weight: 700;
+  }
+  .inapp-banner-text .highlight {
+    display: inline-block;
+    background: rgba(255,255,255,0.22);
+    padding: 1px 7px;
+    border-radius: 6px;
+    font-weight: 700;
+    margin: 0 2px;
+    font-size: 13px;
+  }
+  .inapp-banner-close {
+    background: rgba(255,255,255,0.18);
+    border: none;
+    color: white;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    font-size: 16px;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    padding: 0;
+  }
+  .inapp-banner-close:hover { background: rgba(255,255,255,0.3); }
+
   /* ============ HERO ============ */
   .hero {
     background: white;
@@ -325,6 +384,15 @@
 </head>
 <body>
 
+<!-- ============ IN-APP BROWSER BANNER ============ -->
+<div class="inapp-banner" id="inappBanner">
+  <div class="inapp-banner-icon">✨</div>
+  <div class="inapp-banner-text">
+    <strong>Can't download?</strong> Tap <span class="highlight" id="bannerMenuIcon">•••</span> then <strong>"Open in Safari"</strong> to get the app.
+  </div>
+  <button class="inapp-banner-close" id="inappBannerClose" aria-label="Close">×</button>
+</div>
+
 <!-- ============ HERO ============ -->
 <div class="hero">
   <div class="hero-inner">
@@ -524,6 +592,55 @@
   </div>
   <div class="footer-legal">&copy; 2026 Worthly HQ Inc. &middot; Built with 💜 in Canada</div>
 </footer>
+
+<!-- ============ IN-APP BROWSER DETECTION ============ -->
+<script>
+(function() {
+  var ua = navigator.userAgent || navigator.vendor || window.opera || '';
+
+  // Detect TikTok, Instagram, Facebook, Snapchat, Twitter/X, LinkedIn in-app browsers
+  var isTikTok    = /musical_ly|BytedanceWebview|ByteLocale|Bytedance/i.test(ua);
+  var isInstagram = /Instagram/i.test(ua);
+  var isFacebook  = /FBAN|FBAV|FB_IAB/i.test(ua);
+  var isSnapchat  = /Snapchat/i.test(ua);
+  var isTwitter   = /Twitter/i.test(ua);
+  var isLinkedIn  = /LinkedInApp/i.test(ua);
+
+  var isInApp = isTikTok || isInstagram || isFacebook || isSnapchat || isTwitter || isLinkedIn;
+
+  // Only show on iOS (Android handles App Store links differently and this banner isn't relevant)
+  var isIOS = /iPhone|iPad|iPod/i.test(ua);
+
+  if (!isInApp || !isIOS) return;
+
+  // Respect dismissal within the session
+  try {
+    if (sessionStorage.getItem('worthly_banner_dismissed') === '1') return;
+  } catch (e) { /* sessionStorage may be unavailable */ }
+
+  var banner = document.getElementById('inappBanner');
+  var closeBtn = document.getElementById('inappBannerClose');
+  var menuIcon = document.getElementById('bannerMenuIcon');
+
+  // Use the right menu icon per platform
+  if (isInstagram || isFacebook) {
+    menuIcon.textContent = '•••';
+  } else if (isTikTok) {
+    menuIcon.textContent = '•••';
+  } else {
+    menuIcon.textContent = '•••';
+  }
+
+  // Show it
+  banner.classList.add('show');
+
+  // Dismiss
+  closeBtn.addEventListener('click', function() {
+    banner.classList.remove('show');
+    try { sessionStorage.setItem('worthly_banner_dismissed', '1'); } catch (e) {}
+  });
+})();
+</script>
 
 </body>
 </html>
